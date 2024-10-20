@@ -34,48 +34,62 @@
     <style></style>
     <title>HR System</title>
 </head>
-<body class="container px-4 py-4">
-  <h1>Employee Records</h1>
-  <form action="update.php" method="post">
-  <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
-    <div>
-      <label for="fname">First Name:</label>
-      <input type="text" id="fname" name="fname" value="<?php echo $employee['first_name']; ?>">
-      <label for="lname">Last Name:</label>
-      <input type="text" id="lname" name="lname" value="<?php echo $employee['last_name']; ?>">
-      <label for="position">Position:</label>
-      <input type="text" id="position" name="position" value="<?php echo $employee["position"] ?>">
-    
-      <label for="department">Department:</label>
-      <select id="department" name="department">
-        <option value="" selected>Please select</option>
-          <?php
-          // Loop through the department names and create an option for each one
+<body class="container py-4">
+  <h1 class="mb-4">Employee Records</h1>
+  <form action="update.php" method="post" class="row g-3">
+    <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
+
+    <div class="col-md-6">
+      <label for="fname" class="form-label">First Name:</label>
+      <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $employee['first_name']; ?>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="lname" class="form-label">Last Name:</label>
+      <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $employee['last_name']; ?>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="position" class="form-label">Position:</label>
+      <input type="text" id="position" name="position" class="form-control" value="<?php echo $employee['position']; ?>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="department" class="form-label">Department:</label>
+      <select id="department" name="department" class="form-select" required>
+        <option value="" disabled>Please select</option>
+        <?php
           foreach ($departments as $department) {
             $selected = ($dept_name == $department) ? "selected" : "";
             echo "<option value=\"$department\" $selected>$department</option>";
           }
-          ?>
+        ?>
       </select>
-
-      <label for="date_of_employment">Date of Employment:</label>
-      <input type="date" id="date_of_employment" name="date_of_employment" value="<?php echo $employee['date_of_employment']; ?>" required>
-      <br><br>
-
-      <label for="salary">Salary:</label>
-      <input type="number" id="salary" name="salary" step="0.01" min="0" value="<?php echo $employee["salary"]; ?>" required>
-      <br><br>
-
-      <label for="phone_num">Phone Number:</label>
-      <input type="text" id="phone_num" name="phone_num" maxlength="20" value="<?php echo $employee['phone_num']; ?>" required>
-      <br><br>
-
-      <input type="submit" value="Update">
-      <input type="submit" value="Cancel" name="cancel">
     </div>
-  </form>
-  <form method='post' action='delete.php' class="d-inline">
-    <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
-    <button type='submit'>delete</button>
-  </form>
+
+    <div class="col-md-6">
+      <label for="date_of_employment" class="form-label">Date of Employment:</label>
+      <input type="date" id="date_of_employment" name="date_of_employment" class="form-control" value="<?php echo $employee['date_of_employment']; ?>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="salary" class="form-label">Salary:</label>
+      <input type="number" id="salary" name="salary" class="form-control" step="0.01" min="0" value="<?php echo $employee['salary']; ?>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="phone_num" class="form-label">Phone Number:</label>
+      <input type="text" id="phone_num" name="phone_num" class="form-control" maxlength="20" value="<?php echo $employee['phone_num']; ?>" required>
+    </div>
+
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-secondary ms-2" name="cancel">Cancel</button>
+      </div>
+      <form method="post" action="delete.php" class="d-inline">
+        <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
+        <button type="submit" class="btn btn-danger ms-auto">Delete</button>
+      </form>
+    </div>
 </body>

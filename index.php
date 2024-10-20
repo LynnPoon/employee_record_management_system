@@ -21,41 +21,65 @@
     <style></style>
     <title>HR System</title>
 </head>
-<body class="container px-4 py-4">
-  <h1>Employee Records</h1>
-  <form action="index.php" method="post">
-    <div>
-      <label for="fname">First Name:</label>
-      <input type="text" id="fname" name="fname">
-      <label for="lname">Last Name:</label>
-      <input type="text" id="lname" name="lname">
-      <label for="position">Position:</label>
-      <input type="text" id="position" name="position">
-    
-      <label for="department">Department:</label>
-      <select id="department" name="department">
-        <option value="" selected>Please select</option>
-          <?php
-          // Loop through the department names and create an option for each one
-          foreach ($departments as $department) {
-              echo "<option value=\"$department\">$department</option>";
-          }
-          ?>
-      </select>
+<body class="container py-4">
+  <h1 class="mb-4">Employee Records</h1>
+
+  <!-- add search bar -->
+
+  <form action="index.php" method="post" class="row g-3 mb-4">
+    <div class="row align-items-center mb-3">
+      <label for="fname" class="col-sm-2 col-form-label">First Name:</label>
+      <div class="col-sm-4">
+        <input type="text" id="fname" name="fname" class="form-control">
+      </div>
       
-      <label for="date_of_employment">Date of Employment:</label>
-      <input type="date" id="date_of_employment" name="date_of_employment" required>
-      <br><br>
+      <label for="lname" class="col-sm-2 col-form-label">Last Name:</label>
+      <div class="col-sm-4">
+        <input type="text" id="lname" name="lname" class="form-control">
+      </div>
+    </div>
 
-      <label for="salary">Salary:</label>
-      <input type="number" id="salary" name="salary" step="0.01" min="0" required>
-      <br><br>
+    <div class="row align-items-center mb-3">
+      <label for="position" class="col-sm-2 col-form-label">Position:</label>
+      <div class="col-sm-4">
+        <input type="text" id="position" name="position" class="form-control">
+      </div>
 
-      <label for="phone_num">Phone Number:</label>
-      <input type="text" id="phone_num" name="phone_num" maxlength="20" required>
-      <br><br>
+      <label for="department" class="col-sm-2 col-form-label">Department:</label>
+      <div class="col-sm-4">
+        <select id="department" name="department" class="form-select">
+          <option value="" selected>Please select</option>
+          <?php
+            // Loop through the department names and create an option for each one
+            foreach ($departments as $department) {
+              echo "<option value=\"$department\">$department</option>";
+            }
+          ?>
+        </select>
+      </div>
+    </div>
 
-      <input type="submit" value="Submit">
+    <div class="row align-items-center mb-3">
+      <label for="date_of_employment" class="col-sm-2 col-form-label">Date of Employment:</label>
+      <div class="col-sm-4">
+        <input type="date" id="date_of_employment" name="date_of_employment" class="form-control" required>
+      </div>
+
+      <label for="salary" class="col-sm-2 col-form-label">Salary:</label>
+      <div class="col-sm-4">
+        <input type="number" id="salary" name="salary" step="0.01" min="0" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+      <label for="phone_num" class="col-sm-2 col-form-label">Phone Number:</label>
+      <div class="col-sm-4">
+        <input type="text" id="phone_num" name="phone_num" maxlength="20" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-start">
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 
