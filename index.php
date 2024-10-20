@@ -2,11 +2,21 @@
   require "data.php";
   require "function.php";
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    addEmployee($_POST); //$POST holds tha data when the form submitted
+  $employeeList = [];
+  
+  $employeeList = getEmployee();
+  
+  if (isset($_POST['search_id']) && $_POST['search_id'] !== '') {
+    $employee_id = $_POST['search_id'];
+    $employee = showEmployee($employee_id);
+    if($employee){
+      $employeeList = [$employee]; //wrap the result in an array for table rendering
+    }else{
+      $employeeList = []; //when user typed an unvalid employee id
+    }
+  } else {
+    $employeeList = getEmployee();
   }
-
-  $employees = getEmployee();
 ?>
 
 <!DOCTYPE html>
@@ -24,69 +34,30 @@
 <body class="container py-4">
   <h1 class="mb-4">Employee Records</h1>
 
-  <!-- add search bar -->
+  <div class="d-flex justify-content-end mb-3">
+    <form action="add.php" method="get">
+      <button class="btn btn-link">Register Employee</button>
+    </form>
+  </div>
 
-  <form action="index.php" method="post" class="row g-3 mb-4">
-    <div class="row align-items-center mb-3">
-      <label for="fname" class="col-sm-2 col-form-label">First Name:</label>
-      <div class="col-sm-4">
-        <input type="text" id="fname" name="fname" class="form-control">
+  <form action="index.php" method="post" class="mb-3">
+    <div class="row align-items-end">
+      <div class="col-auto">
+        <label for="search_id" class="form-label">Search by Employee ID:</label>
       </div>
-      
-      <label for="lname" class="col-sm-2 col-form-label">Last Name:</label>
-      <div class="col-sm-4">
-        <input type="text" id="lname" name="lname" class="form-control">
+      <div class="col-auto">
+        <input type="text" id="search_id" name="search_id" class="form-control" style="width: 200px;">
       </div>
-    </div>
-
-    <div class="row align-items-center mb-3">
-      <label for="position" class="col-sm-2 col-form-label">Position:</label>
-      <div class="col-sm-4">
-        <input type="text" id="position" name="position" class="form-control">
+      <div class="col-auto">
+        <button type="submit" class="btn btn-light">Search</button>
       </div>
-
-      <label for="department" class="col-sm-2 col-form-label">Department:</label>
-      <div class="col-sm-4">
-        <select id="department" name="department" class="form-select">
-          <option value="" selected>Please select</option>
-          <?php
-            // Loop through the department names and create an option for each one
-            foreach ($departments as $department) {
-              echo "<option value=\"$department\">$department</option>";
-            }
-          ?>
-        </select>
-      </div>
-    </div>
-
-    <div class="row align-items-center mb-3">
-      <label for="date_of_employment" class="col-sm-2 col-form-label">Date of Employment:</label>
-      <div class="col-sm-4">
-        <input type="date" id="date_of_employment" name="date_of_employment" class="form-control" required>
-      </div>
-
-      <label for="salary" class="col-sm-2 col-form-label">Salary:</label>
-      <div class="col-sm-4">
-        <input type="number" id="salary" name="salary" step="0.01" min="0" class="form-control" required>
-      </div>
-    </div>
-
-    <div class="row align-items-center mb-3">
-      <label for="phone_num" class="col-sm-2 col-form-label">Phone Number:</label>
-      <div class="col-sm-4">
-        <input type="text" id="phone_num" name="phone_num" maxlength="20" class="form-control" required>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-start">
-      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 
   <table class="table">
-    <tbody>
-    <tr>
-    <th>Employee ID</th>
+    <thead>
+      <tr>
+        <th>Employee ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Position</th>
@@ -94,19 +65,34 @@
         <th>Date of Employment</th>
         <th>Salary</th>
         <th>Phone Number</th>
-    </tr>
-    <?php foreach ($employees as $employee): ?>      
-      <tr onclick="window.location='update.php?id=<?php echo $employee['employee_id']; ?>'">
-          <td><?php echo $employee['employee_id']; ?></td>
-          <td><?php echo $employee['first_name']; ?></td>
-          <td><?php echo $employee['last_name']; ?></td>
-          <td><?php echo $employee['position']; ?></td>
-          <td><?php echo $employee['department_id']; ?></td>
-          <td><?php echo $employee['date_of_employment']; ?></td>
-          <td><?php echo $employee['salary']; ?></td>
-          <td><?php echo $employee['phone_num']; ?></td>
-      </tr>     
-    <?php endforeach; ?>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($employeeList) === 1): ?>
+          <tr onclick="window.location='update.php?id=<?php echo $employeeList[0]['employee_id']; ?>'">
+            <td><?php echo $employeeList[0]['employee_id']; ?></td>
+            <td><?php echo $employeeList[0]['first_name']; ?></td>
+            <td><?php echo $employeeList[0]['last_name']; ?></td>
+            <td><?php echo $employeeList[0]['position']; ?></td>
+            <td><?php echo $employeeList[0]['department_id']; ?></td>
+            <td><?php echo $employeeList[0]['date_of_employment']; ?></td>
+            <td><?php echo $employeeList[0]['salary']; ?></td>
+            <td><?php echo $employeeList[0]['phone_num']; ?></td>
+          </tr>
+      <?php else: ?>        
+        <?php foreach ($employeeList as $employee): ?>      
+          <tr onclick="window.location='update.php?id=<?php echo $employee['employee_id']; ?>'">
+            <td><?php echo $employee['employee_id']; ?></td>
+            <td><?php echo $employee['first_name']; ?></td>
+            <td><?php echo $employee['last_name']; ?></td>
+            <td><?php echo $employee['position']; ?></td>
+            <td><?php echo $employee['department_id']; ?></td>
+            <td><?php echo $employee['date_of_employment']; ?></td>
+            <td><?php echo $employee['salary']; ?></td>
+            <td><?php echo $employee['phone_num']; ?></td>
+          </tr>     
+        <?php endforeach; ?>
+      <?php endif; ?>
     </tbody>
   </table>
 </body>

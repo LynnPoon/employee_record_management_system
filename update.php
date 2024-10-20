@@ -5,12 +5,11 @@
   // Get the employee_id from the query string
   if (isset($_GET['id'])) {
     $employee_id = $_GET['id'];
-    $employee = showEmployee($employee_id); // Fetch employee data using the ID
+    $employee = showEmployee($employee_id);
     $dept_name = getDepartmentName($employee);
   }
 
   //var_dump($employee);
-
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -85,11 +84,12 @@
     <div class="col-12 d-flex justify-content-between align-items-center">
       <div>
         <button type="submit" class="btn btn-primary">Update</button>
-        <button type="submit" class="btn btn-secondary ms-2" name="cancel">Cancel</button>
+        <button type="submit" class="btn btn-light ms-2" name="cancel">Cancel</button>
       </div>
       <form method="post" action="delete.php" class="d-inline">
         <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
         <button type="submit" class="btn btn-danger ms-auto">Delete</button>
       </form>
     </div>
+  </form>
 </body>
