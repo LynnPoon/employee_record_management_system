@@ -29,7 +29,7 @@ function getDepartmentName($employee){
   return $dept_name;
 }
 
-
+//no sanitization for input values, so XSS can still happen even with prepared statements used
 function addEmployee($data){
   global $db;
 

@@ -82,14 +82,18 @@
     </div>
 
     <div class="col-12 d-flex justify-content-between align-items-center">
-      <div>
+      <form action="update.php" method="post" >  
+        <div>
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="submit" class="btn btn-light ms-2" name="cancel">Cancel</button>
-      </div>
+        </div>            
+      </form>
+
       <form method="post" action="delete.php" class="d-inline">
         <input type="hidden" name="employee_id" value="<?php echo $employee['employee_id']; ?>">
-        <button type="submit" class="btn btn-danger ms-auto">Delete</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
       </form>
     </div>
+
   </form>
 </body>
