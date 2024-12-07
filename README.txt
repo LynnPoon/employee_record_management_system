@@ -1,8 +1,8 @@
-Open the terminal in Laragon, then run the commands below.
+Open the terminal in Laragon, then run the commands below. Use mysql -u root -p to login
 
-1. CREATE DATABASE employment_system;
+1. CREATE DATABASE hr_system;
 
-2. USE employment_system;
+2. USE hr_system;
 
 3. Create the department table:
 
@@ -10,6 +10,14 @@ CREATE TABLE department (
     department_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
+
+INSERT INTO department (department_id, name) VALUES
+(1, 'Human Resources'),
+(2, 'Finance'),
+(3, 'Marketing'),
+(4, 'Sales'),
+(5, 'Information Technology');
+
 
 4. Create the employee table:
 
